@@ -57,7 +57,7 @@ test("popover responds to hover", async () => {
   //   /no ice cream will actually be delivered/i
   // );
   // expect(nullPopoverAgain).not.toBeInTheDocument();
-  waitForElementToBeRemoved(() =>
+  await waitForElementToBeRemoved(() =>
     screen.queryByText(/no ice cream will actually be delivered/i)
   );
 });
