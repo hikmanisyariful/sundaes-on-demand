@@ -18,7 +18,9 @@ test("displays image for each topping option from server", async () => {
   render(<Options optionType="toppings" />);
 
   // find images
-  const toppingImages = await screen.findAllByRole("img", { name: /topping/i });
+  const toppingImages = await screen.findAllByRole("img", {
+    name: /topping/i,
+  });
   expect(toppingImages).toHaveLength(3);
 
   // confirm alt text of images
