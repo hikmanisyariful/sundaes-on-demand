@@ -36,25 +36,24 @@ test("update topping subtotal when toppings change", async () => {
   });
   expect(toppingsSubtotal).toHaveTextContent("0.00");
 
-  // update cherries topping to 3 and check the subtotal
-  const cherriesTopping = await screen.findByRole("spinbutton", {
+  // add cherries topping and check the total
+  const cherriesCheckbox = await screen.findByRole("checkbox", {
     name: "Cherries",
   });
-  userEvent.clear(cherriesTopping);
-  userEvent.type(cherriesTopping, "3");
+  userEvent.click(cherriesCheckbox);
+  expect(toppingsSubtotal).toHaveTextContent("1.50");
+
+  // add M&Ms topping and check the total
+  const mmsCheckbox = screen.getByRole("checkbox", { name: "M&Ms" });
+  userEvent.click(mmsCheckbox);
+  expect(toppingsSubtotal).toHaveTextContent("3.00");
+
+  // add hot fudge and check the total
+  const hotFudgeCheckbox = screen.getByRole("checkbox", { name: "Hot fudge" });
+  userEvent.click(hotFudgeCheckbox);
   expect(toppingsSubtotal).toHaveTextContent("4.50");
 
-  // update M&Ms topping to 1 and check the subtotal
-  const mmsTopping = await screen.findByRole("spinbutton", { name: "M&Ms" });
-  userEvent.clear(mmsTopping);
-  userEvent.type(mmsTopping, "1");
-  expect(toppingsSubtotal).toHaveTextContent("6.00");
-
-  // update Hot fudge to 2 and check the subtotal
-  const hotFudgeTopping = await screen.findByRole("spinbutton", {
-    name: "Hot fudge",
-  });
-  userEvent.clear(hotFudgeTopping);
-  userEvent.type(hotFudgeTopping, "2");
-  expect(toppingsSubtotal).toHaveTextContent("9.00");
+  // remove hot fudge and check the total
+  userEvent.click(hotFudgeCheckbox);
+  expect(toppingsSubtotal).toHaveTextContent("3.00");
 });
